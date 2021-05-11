@@ -11,6 +11,7 @@ def getTagValue(tagPath):
 	try:
 		tagValue = tagPath.strip()
 	except Exception as e:
+		print('fail...')
 		pass
 	return tagValue
 
@@ -32,16 +33,18 @@ def getArticleInfo(pageUrl):
 				# print(articlesTags.name)
 				# print(articlesTags)
 				try:
-					print(articlesTags.div.a)
+					# del(articlesTags.div.a.i)
+					# print(dir(articlesTags.div.a))
 					# print(articlesTags['class'])
 					if articleImg == None:
 						articleImg = getTagValue(articlesTags.a.img['data-src'])
 					if articleTitle == None:
-						articleTitle = getTagValue(articlesTags.div.a.string)
-					# if articleSubTitle == None:
-					# 	articleSubTitle = getTagValue(articlesTags.div)
+						articleTitle = getTagValue(articlesTags.find('a', {'class': 'article'}).contents[0])
+					if articleSubTitle == None:
+						articleSubTitle = getTagValue(articlesTags.find('div', {'class': 'subtitle'}).contents[0])
 					if dateTime == None:
-						dateTime = getTagValue(articlesTags.time.span['data-time'])
+						# dateTime = getTagValue(articlesTags.time.span['data-time'])
+						dateTime = getTagValue(articlesTags.find('span', {'class': 'strana-adate'})['data-time'])
 					# for realTag in articlesTags.children:
 					# 	try:
 					# 		# print(realTag)
@@ -57,26 +60,28 @@ def getArticleInfo(pageUrl):
 				# 	# print(type(ahref))
 				# 	# print(ahref)
 				except AttributeError as error:
-					print('Attribute error:', end='')
-					print(error)
+					# print('Attribute error:', end='')
+					# print(error)
+					pass
 				except Exception as e:
 					print('Other error:', end='')
 					print(e)
-			print(articleImg)
-			print(articleTitle)
-			print(articleSubTitle)
-			print(dateTime)
-			print('-' * 10)
+			print('Image link:' + articleImg)
+			print('Title:' + articleTitle)
+			print('Subtitle:' + articleSubTitle)
+			print('Date:' + dateTime)
+			# print('-' * 10)
 			# s = ''.join(e for e in article if type(e) is bs4.element.NavigableString)
 			# print(article)
 			# print(article.a.get_text())
 			# articleTitle = article.select('a.article').get_text()
 			# print(articleTitle)
 			print('-' * 30)
-			break
+			# break
 	except AttributeError as error:
-		print('Attribute error:', end='')
-		print(error)
+		# print('Attribute error:', end='')
+		# print(error)
+		pass
 	except Exception as e:
 		print('Other error:', end='')
 		print(e)
