@@ -12,19 +12,26 @@ def getArticleInfo(pageUrl):
 	html = urlopen(req)
 	bsObj = BeautifulSoup(html, "html.parser")
 	try:
-		articles = bsObj.find_all('article', {'class': 'lenta-news title'})
+		articles = bsObj.find_all('article', {'class': 'lenta-news'})
 		for article in articles:
 			# print(type(article.children))
 			for articlesTags in article.children:
-				print(articlesTags)
-				print('-' * 10)
+				print(type(articlesTags))
+				try:
+					print(articlesTags['class'])
+				# 	ahref = articlesTags.find('div', {'class': 'lenta-text'})
+				# 	# print(type(ahref))
+				# 	# print(ahref)
+				# 	print('-' * 10)
+				except Exception as e:pass
+					# print(e)
 			# s = ''.join(e for e in article if type(e) is bs4.element.NavigableString)
 			# print(article)
 			# print(article.a.get_text())
 			# articleTitle = article.select('a.article').get_text()
 			# print(articleTitle)
 			print('-' * 30)
-	except:
-	    print('error')
+	except Exception as e:
+	    print(e)
 
 getArticleInfo(articles_link)
